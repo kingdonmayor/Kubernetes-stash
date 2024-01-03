@@ -1,0 +1,22 @@
+#kubectl to install telnet
+kubectl exec {pod} -it bash
+apt-get
+apt update
+apt-get install telnet -y
+telnet "provide ip address and port"
+
+#Kubectl to install ping
+kubectl exec {pod} -it bash
+apt-get update
+apt-get install iputils-ping
+Ping "provide ip address"
+
+
+
+# Get the list of services
+services=$(kubectl get services --no-headers | awk '{print $1}')
+
+for service in $services; do
+    pod_count=$(kubectl get pods --selector=app="$service" --no-headers | wc -l)
+    echo "Service: $service, Pod Count: $pod_count"
+done
